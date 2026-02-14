@@ -1,29 +1,23 @@
-MedCognis Health is a high-performance clinical triage and command center platform engineered for modern healthcare environments.
+## MedCognis Health is a high-performance clinical triage and command center platform engineered for modern healthcare environments.
 
 The system addresses a core operational challenge in emergency and inpatient care: accurate, transparent, and real-time patient prioritization.
 
-By combining:
+## By combining:
 
 Machine Learning (XGBoost)
-
 Rule-based clinical safety overrides
-
 Explainable AI (SHAP)
-
 Local LLM-powered clinical assistance (Llama 3 via Ollama)
-
 MedCognis delivers interpretable, data-driven risk scoring to support faster clinical decisions and optimized patient flow.
 
-🚀 Key Features
+## 🚀 Key Features
+
 🧠 Hybrid Risk Scoring Engine
-
 XGBoost-based triage classification
-
 Hard-coded safety overrides (critical BP, SpO₂, HR thresholds)
-
 Multi-layer prioritization logic
 
-🔍 Explainable AI (XAI)
+## 🔍 Explainable AI (XAI)
 
 Integrated SHAP (SHapley Additive exPlanations)
 
@@ -31,7 +25,7 @@ Feature-level transparency for every prediction
 
 Clinician-readable reasoning outputs
 
-🩺 Diagnostic Mapping
+## 🩺 Diagnostic Mapping
 
 Symptom-vital correlation engine
 
@@ -39,7 +33,7 @@ Condition prediction
 
 Specialist recommendation routing
 
-📊 Real-Time Command Center
+## 📊 Real-Time Command Center
 
 Glassmorphism-inspired UI
 
@@ -49,7 +43,7 @@ Department capacity visibility
 
 Vital trend radar & bar charts
 
-📄 Automated EHR Parsing
+## 📄 Automated EHR Parsing
 
 Heuristic PDF/Text ingestion
 
@@ -57,7 +51,7 @@ Rapid structured data extraction
 
 In-memory preprocessing pipeline
 
-🤖 Local LLM Integration
+## 🤖 Local LLM Integration
 
 Secure, on-premise clinical assistant
 
@@ -65,11 +59,11 @@ Powered by Llama 3 via Ollama
 
 No external data transmission
 
-🏗 System Architecture
+## 🏗 System Architecture
 
 MedCognis follows a decoupled, service-oriented architecture optimized for low-latency clinical operations.
 
-1️⃣ Frontend Layer – Next.js 16
+# 1️⃣ Frontend Layer – Next.js 16
 
 Framework: Next.js (App Router)
 
@@ -83,70 +77,55 @@ Icons: Lucide React
 
 State Management: React hooks integrated with triage utilities
 
-2️⃣ Backend API Layer – FastAPI
+# 2️⃣ Backend API Layer – FastAPI
 
 RESTful API architecture
-
-Orchestration between:
+# Orchestration between:
 
 Frontend
+![image alt](https://github.com/Prashant44-cell/Image_classification/blob/783ab16e8749fd55f79ab22cc00d700b1074c63b/Image_classification(img1).jpeg)
 
 ML models
-
 Database
 
-Key Endpoints:
+# Key Endpoints:
 
-Patient registration
+1.Patient registration
+2.Risk prediction
+3.Model retraining
+4.Clinical AI chat
+5.Intelligence Layer
+6.Predictive Model
+7.XGBoost classifier
+8.Trained on structured clinical features
+9.SHAP-based interpretability module
 
-Risk prediction
-
-Model retraining
-
-Clinical AI chat
-
-3️⃣ Intelligence Layer
-📈 Predictive Model
-
-XGBoost classifier
-
-Trained on structured clinical features
-
-SHAP-based interpretability module
-
-💬 Clinical AI Assistant
+# 💬 Clinical AI Assistant
 
 Local LLM endpoint
-
 Ollama runtime
-
 Offline inference capability
-
-4️⃣ Persistence Layer – SQLite
-
+Persistence Layer – SQLite
 Transactional local database
-
 Patient records storage
-
 Role-Based Access Control (RBAC)
-
 Visit history tracking
 
-🛠 Technology Stack
-Layer	Technologies
+# 🛠 Technology Stack
+Layer	Technologies 
+
 Frontend	Next.js 16, Tailwind CSS v4, Recharts, Framer Motion, Lucide React
 Backend	Python 3.10+, FastAPI, Uvicorn
 AI / ML	XGBoost, SHAP, Scikit-Learn, Pandas, NumPy
 Local LLM	Ollama (Llama 3)
 Database	SQLite 3
 Dev Tools	npm, pip
+
 ⚙ Installation Guide
 📌 Prerequisites
 
 Node.js ≥ 18
-
 Python ≥ 3.10
-
 Ollama installed and running
 
 🔹 Backend Setup
@@ -156,12 +135,11 @@ source .venv/bin/activate     # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 python app.py
 
-
-Backend runs at:
+# Backend runs at:
 
 http://localhost:8000
 
-🔹 Frontend Setup
+#🔹 Frontend Setup
 cd ..
 npm install
 npm run dev
@@ -171,20 +149,19 @@ Frontend runs at:
 
 http://localhost:3000
 
-🔹 Ollama Setup
+#🔹 Ollama Setup
 
 Ensure Ollama daemon is active:
 
 ollama pull llama3
 
-
 Default endpoint:
 
 http://localhost:11434
 
-🧪 Usage Guide
-1️⃣ Access Dashboard
+# 🧪 Usage Guide
 
+1️⃣ Access Dashboard
 Open:
 
 http://localhost:3000
@@ -192,26 +169,21 @@ http://localhost:3000
 2️⃣ Patient Triage
 
 Navigate to Patient Records
-
 Upload CSV / JSON / PDF
-
 Trigger AI risk assessment
 
 3️⃣ Analytics View
 
 Inspect SHAP explanations
-
 Review risk breakdown
-
 Examine recommended specialists
 
 4️⃣ Clinical Assistant
 
 Access Support & Help
-
 Interact with local LLM for structured guidance
 
-📂 Folder Structure
+# 📂 Folder Structure
 ├── app/                 # Next.js App Router
 ├── Models/              # Backend & ML Logic
 │   ├── app.py
@@ -223,42 +195,33 @@ Interact with local LLM for structured guidance
 ├── types/               # TypeScript interfaces
 └── README.md
 
-🔐 Security & Compliance
+# 🔐 Security & Compliance
 
 All AI inference runs locally
-
 No cloud data transmission
-
 SQLite-based local persistence
-
 Role-Based Access Control
-
 On-premise LLM deployment
 
-🔮 Future Enhancements
+## 🔮 Future Enhancements
 
 DICOM imaging integration (MRI/CT)
-
 Predictive bed capacity forecasting
-
 Federated learning model updates
-
 Multi-branch hospital synchronization
-
 Advanced anomaly detection in vitals
 
-👥 Contributors
+## 👥 Contributors
 
 Project Lead: Phoenixphones
-
 Clinical AI Lead: Phoenixphones
 
-📜 License
+# 📜 License
 
 Licensed under the MIT License.
 See LICENSE file for details.
 
-⚠ Disclaimer
+# ⚠ Disclaimer
 
 MedCognis Health is a clinical decision support system.
 It is not a substitute for licensed medical judgment and must be used under professional supervision.
