@@ -34,10 +34,13 @@ def init_db():
         )
     ''')
 
+    # Create Patients Table
     c.execute('''
         CREATE TABLE IF NOT EXISTS patients (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            user_id INTEGER, -- FK to users.id
+            patient_custom_id TEXT UNIQUE,
+            name TEXT,
+            user_id INTEGER,
             timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
             age INTEGER,
             gender TEXT,
@@ -55,6 +58,17 @@ def init_db():
             visit_status TEXT DEFAULT 'Waiting'
         )
     ''')
+    
+    # Simple Migration: Add columns if they don't exist
+    try:
+        c.execute("ALTER TABLE patients ADD COLUMN patient_custom_id TEXT UNIQUE")
+    except Exception:
+        pass 
+        
+    try:
+        c.execute("ALTER TABLE patients ADD COLUMN name TEXT")
+    except Exception:
+        pass
     
     # Seed default doctor if not exists
     c.execute("SELECT count(*) FROM users WHERE username='admin'")
@@ -102,6 +116,8 @@ async def health_check():
 from pydantic import BaseModel, Field
 
 class PatientData(BaseModel):
+    Patient_ID: str = Field(..., description="Unique Patient ID")
+    Name: str = Field(..., description="Patient Name")
     Age: int = Field(..., ge=0, le=120, description="Age must be between 0 and 120")
     Gender: str
     Symptoms: str
@@ -138,9 +154,11 @@ async def predict_risk(data: PatientData):
         conn = sqlite3.connect(DB_NAME)
         c = conn.cursor()
         c.execute('''
-            INSERT INTO patients (user_id, age, gender, symptoms, bp, heart_rate, temp, o2_sat, pain_level, consciousness, condition, risk_level, department, confidence)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO patients (patient_custom_id, name, user_id, age, gender, symptoms, bp, heart_rate, temp, o2_sat, pain_level, consciousness, condition, risk_level, department, confidence)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
+            input_data['Patient_ID'],
+            input_data['Name'],
             input_data.get('user_id'),
             input_data['Age'], 
             input_data['Gender'], 
@@ -157,8 +175,11 @@ async def predict_risk(data: PatientData):
             result['confidence']
         ))
         conn.commit()
+    except sqlite3.IntegrityError:
+        raise HTTPException(status_code=400, detail=f"Patient ID '{input_data['Patient_ID']}' already exists.")
     except Exception as e:
         print(f"DB Error: {e}")
+        raise HTTPException(status_code=500, detail="Database error occurred.")
     finally:
         conn.close()
 

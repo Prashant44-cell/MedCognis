@@ -1,6 +1,6 @@
 "use client";
 
-import { Activity, Bell, LayoutDashboard, Menu, Settings, Users, Upload, FileText, BarChart3, Heart, Shield, Zap, ChevronRight, AlertTriangle, CheckCircle, Moon, Sun, Mail, Smartphone, BellRing, HelpCircle, Calendar, Send, MessageSquare, Phone, Clock, ExternalLink, RefreshCw, UploadCloud } from "lucide-react";
+import { Activity, Bell, LayoutDashboard, Menu, Settings, Users, Upload, FileText, BarChart3, Heart, Shield, Zap, ChevronRight, AlertTriangle, AlertCircle, CheckCircle, Moon, Sun, Mail, Smartphone, BellRing, HelpCircle, Calendar, Send, MessageSquare, Phone, Clock, ExternalLink, RefreshCw, UploadCloud } from "lucide-react";
 import StatsPanel from "@/components/StatsPanel";
 import TriageDashboard from "@/components/TriageDashboard";
 import ScrollFrameSequence from "@/components/ScrollFrameSequence";
@@ -1054,6 +1054,8 @@ export default function Home() {
 
 function PatientDiagnosisForm() {
   const [formData, setFormData] = useState({
+    Patient_ID: "",
+    Name: "",
     Age: 30,
     Gender: "Male",
     Symptoms: "Fever",
@@ -1091,7 +1093,9 @@ function PatientDiagnosisForm() {
           const detail = data.detail?.[0];
           throw new Error(detail ? `${detail.loc?.[1] || 'Field'}: ${detail.msg}` : "Validation failed. Check inputs.");
         }
-        throw new Error(data.message || "Failed to analyze patient data.");
+        // Handle generic errors (like Duplicate Patient ID)
+        const errorMsg = data.detail || data.message || "Failed to analyze patient data.";
+        throw new Error(errorMsg);
       }
 
       setResult(data);
@@ -1163,6 +1167,14 @@ function PatientDiagnosisForm() {
 
       <form onSubmit={handleAnalyze} className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-1">
+          <label className="text-xs font-semibold opacity-50 uppercase tracking-wider">Patient ID</label>
+          <input type="text" placeholder="Unique ID (e.g. PAT-001)" required value={formData.Patient_ID || ""} onChange={(e) => setFormData({ ...formData, Patient_ID: e.target.value })} className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-sm focus:outline-none focus:border-medical-brand transition-colors" />
+        </div>
+        <div className="space-y-1">
+          <label className="text-xs font-semibold opacity-50 uppercase tracking-wider">Patient Name</label>
+          <input type="text" placeholder="Full Name" required value={formData.Name || ""} onChange={(e) => setFormData({ ...formData, Name: e.target.value })} className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-sm focus:outline-none focus:border-medical-brand transition-colors" />
+        </div>
+        <div className="space-y-1">
           <label className="text-xs font-semibold opacity-50 uppercase tracking-wider">Age</label>
           <input type="number" min="0" max="120" value={formData.Age || ""} onChange={(e) => setFormData({ ...formData, Age: e.target.value === "" ? 0 : parseInt(e.target.value) })} className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-sm focus:outline-none focus:border-medical-brand transition-colors" />
         </div>
@@ -1215,7 +1227,7 @@ function PatientDiagnosisForm() {
           </select>
         </div>
         <div className="md:col-span-2 pt-4 flex gap-3">
-          <button type="button" onClick={() => setFormData({ Age: 30, Gender: "Male", Symptoms: "Fever", Blood_Pressure: 120, Heart_Rate: 80, Temperature: 37.0, O2_Saturation: 98, Pain_Severity: 2, Consciousness: "Alert", Pre_Existing_Conditions: "None" })} className="px-6 py-3 bg-white/5 border border-white/10 text-white rounded-xl font-bold hover:bg-white/10 transition-colors">
+          <button type="button" onClick={() => setFormData({ Patient_ID: "", Name: "", Age: 30, Gender: "Male", Symptoms: "Fever", Blood_Pressure: 120, Heart_Rate: 80, Temperature: 37.0, O2_Saturation: 98, Pain_Severity: 2, Consciousness: "Alert", Pre_Existing_Conditions: "None" })} className="px-6 py-3 bg-white/5 border border-white/10 text-white rounded-xl font-bold hover:bg-white/10 transition-colors">
             Reset
           </button>
           <button type="submit" disabled={loading} className="flex-1 py-3 bg-medical-brand text-white rounded-xl font-bold hover:bg-blue-600 transition-colors disabled:opacity-50 flex items-center justify-center gap-2">
