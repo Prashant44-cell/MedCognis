@@ -76,9 +76,6 @@ Animations: Framer Motion
 Icons: Lucide React
 State Management: React hooks integrated with triage utilities
 
-# 2️⃣ Backend API Layer – FastAPI
-
-RESTful API architecture
 # Orchestration between:
 
 Frontend 
