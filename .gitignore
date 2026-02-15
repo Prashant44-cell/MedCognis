@@ -39,3 +39,16 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# temporary files
+git_status.txt
+local_files.txt
+remote_files.txt
+clean_local.txt
+clean_remote.txt
